@@ -267,23 +267,30 @@ typedef NS_ENUM(NSUInteger, MCSwipeTableViewCellDirection) {
     _direction                          = [self directionWithPercentage:percentage];
     
     if (state == UIGestureRecognizerStateBegan || state == UIGestureRecognizerStateChanged) {
+        [self animateSliderWithXTranslation:translation.x animationDuration:animationDuration hasEnded:NO];
+        [gesture setTranslation:CGPointZero inView:self];
+    } else if (state == UIGestureRecognizerStateEnded || state == UIGestureRecognizerStateCancelled) {
+        [self animateSliderWithXTranslation:translation.x animationDuration:animationDuration hasEnded:YES];
+    }
+}
+
+- (void)animateSliderWithXTranslation:(CGFloat)xTranslation animationDuration:(CGFloat)animationDuration hasEnded:(BOOL)hasEnded {
+    CGFloat percentage = [self percentageWithOffset:CGRectGetMinX(_contentScreenshotView.frame) relativeToWidth:CGRectGetWidth(self.bounds)];
+    
+    if (!hasEnded) {
         _dragging = YES;
         
         [self setupSwipingView];
         
-        CGPoint center = {_contentScreenshotView.center.x + translation.x, _contentScreenshotView.center.y};
+        CGPoint center = {_contentScreenshotView.center.x + xTranslation, _contentScreenshotView.center.y};
         _contentScreenshotView.center = center;
         [self animateWithOffset:CGRectGetMinX(_contentScreenshotView.frame)];
-        [gesture setTranslation:CGPointZero inView:self];
         
         // Notifying the delegate that we are dragging with an offset percentage.
         if ([_delegate respondsToSelector:@selector(swipeTableViewCell:didSwipeWithPercentage:)]) {
             [_delegate swipeTableViewCell:self didSwipeWithPercentage:percentage];
         }
-    }
-    
-    else if (state == UIGestureRecognizerStateEnded || state == UIGestureRecognizerStateCancelled) {
-        
+    } else {
         _dragging = NO;
         _activeView = [self viewWithPercentage:percentage];
         _currentPercentage = percentage;
@@ -633,6 +640,21 @@ typedef NS_ENUM(NSUInteger, MCSwipeTableViewCellDirection) {
             }
         }];
     }];
+}
+
+#pragma mark - Trigger Manually
+
+- (void)triggerState1 {
+    [UIView animateWithDuration:0.2f animations:^{
+        [self animateSliderWithXTranslation:-44.f animationDuration:0 hasEnded:NO];
+    } completion:^(BOOL finished) {
+        [self animateSliderWithXTranslation:0.f animationDuration:0 hasEnded:YES];
+    }];
+}
+
+
+- (void)triggerState3 {
+    
 }
 
 #pragma mark - Utilities
