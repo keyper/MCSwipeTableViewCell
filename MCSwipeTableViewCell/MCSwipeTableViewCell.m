@@ -645,16 +645,11 @@ typedef NS_ENUM(NSUInteger, MCSwipeTableViewCellDirection) {
 #pragma mark - Trigger Manually
 
 - (void)triggerState1 {
-    [UIView animateWithDuration:0.2f animations:^{
-        [self animateSliderWithXTranslation:-44.f animationDuration:0 hasEnded:NO];
+    [UIView animateWithDuration:0.15f animations:^{
+        [self animateSliderWithXTranslation:-70.f animationDuration:0 hasEnded:NO];
     } completion:^(BOOL finished) {
         [self animateSliderWithXTranslation:0.f animationDuration:0 hasEnded:YES];
     }];
-}
-
-
-- (void)triggerState3 {
-    
 }
 
 #pragma mark - Utilities

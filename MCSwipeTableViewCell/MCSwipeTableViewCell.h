@@ -174,6 +174,11 @@ typedef void (^MCSwipeCompletionBlock)(MCSwipeTableViewCell *cell, MCSwipeTableV
  */
 - (void)swipeToOriginWithCompletion:(void(^)(void))completion;
 
+/**
+ *  Trigger state 1 as if the user had swiped and released.
+ */
+- (void)triggerState1;
+
 @end
 
 
