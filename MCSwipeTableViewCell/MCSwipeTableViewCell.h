@@ -57,7 +57,7 @@ typedef void (^MCSwipeCompletionBlock)(MCSwipeTableViewCell *cell, MCSwipeTableV
 @interface MCSwipeTableViewCell : UITableViewCell
 
 /** Delegate of `MCSwipeTableViewCell` */
-@property (nonatomic, assign) id <MCSwipeTableViewCellDelegate> delegate;
+@property (nonatomic, weak) id <MCSwipeTableViewCellDelegate> delegate;
 
 /** 
  * Damping of the physical spring animation. Expressed in percent.
@@ -178,6 +178,11 @@ typedef void (^MCSwipeCompletionBlock)(MCSwipeTableViewCell *cell, MCSwipeTableV
  *  Trigger state 1 as if the user had swiped and released.
  */
 - (void)triggerState1;
+
+/**
+ *  Trigger state 1 as if the user had swiped and released, and specify the animation duration
+ */
+- (void)triggerState1WithDuration:(NSTimeInterval)duration;
 
 @end
 
