@@ -179,6 +179,11 @@ typedef void (^MCSwipeCompletionBlock)(MCSwipeTableViewCell *cell, MCSwipeTableV
  */
 - (void)triggerState1;
 
+/**
+ *  Trigger state 1 as if the user had swiped and released, and specify the animation duration
+ */
+- (void)triggerState1WithDuration:(NSTimeInterval)duration;
+
 @end
 
 
